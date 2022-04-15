@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "snowyleavesplus",
+  "version": "${version}",
+  "name": "SnowyLeavesPlus",
+  "description": "When it is snowing leaves will slowly turn whiter, and when it is not they will turn back to normal",
+  "authors": ["theRookieCoder"],
+  "contact": {
+    "email": "ileshkt@gmail.com",
+    "sources": "https://github.com/theRookieCoder/SnowyLeavesPlus",
+    "issues": "https://github.com/theRookieCoder/SnowyLeavesPlus/issues"
+  },
+  "license": "MPL-2.0",
+  "icon": "assets/snowyleavesplus/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": ["io.github.therookiecoder.snowyleavesplus.SnowyLeavesPlusClient"]
+  },
+  "mixins": ["SnowyLeavesPlus.mixins.json"],
+  "depends": {
+    "fabricloader": "*",
+    "fabric": "*",
+    "minecraft": "1.18.2"
+  }
+}

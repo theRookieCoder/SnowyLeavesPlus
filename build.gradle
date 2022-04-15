@@ -1,0 +1,54 @@
+plugins {
+    id 'fabric-loom' version '0.12-SNAPSHOT'
+//    id 'com.modrinth.minotaur' version '2.+'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+dependencies {
+    // Change versions in gradle.properties
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+}
+
+processResources {
+    inputs.property "version", project.version
+    filteringCharset "UTF-8"
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+def targetJavaVersion = 17
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = "UTF-8"
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        it.options.release = targetJavaVersion
+    }
+}
+
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+    archivesBaseName = project.archives_base_name
+    withSourcesJar()
+}
+
+//import com.modrinth.minotaur.dependencies.ModDependency
+//modrinth {
+//    token = System.getenv("MODRINTH_API_KEY")
+//    projectId = "_"
+//    versionNumber = version
+//    versionType = "beta"
+//    versionName = "SnowyLeavesPlus ${version}"
+//    uploadFile = remapJar
+//    gameVersions = [project.minecraft_version]
+//    loaders = ["fabric"]
+//    dependencies = [new ModDependency("P7dR8mSH", "required")]
+//}
