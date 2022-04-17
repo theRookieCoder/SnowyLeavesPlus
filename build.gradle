@@ -1,6 +1,7 @@
 plugins {
     id 'fabric-loom' version '0.12-SNAPSHOT'
-//    id 'com.modrinth.minotaur' version '2.+'
+    id 'com.modrinth.minotaur' version '2.+'
+    id 'com.matthewprenger.cursegradle' version '1.4.+'
 }
 
 version = project.mod_version
@@ -40,15 +41,37 @@ java {
     withSourcesJar()
 }
 
-//import com.modrinth.minotaur.dependencies.ModDependency
-//modrinth {
-//    token = System.getenv("MODRINTH_API_KEY")
-//    projectId = "_"
-//    versionNumber = version
-//    versionType = "beta"
-//    versionName = "SnowyLeavesPlus ${version}"
-//    uploadFile = remapJar
-//    gameVersions = [project.minecraft_version]
-//    loaders = ["fabric"]
-//    dependencies = [new ModDependency("P7dR8mSH", "required")]
-//}
+// TODO: Update this every release
+def changelog = "Fixed a bug where if the `snowiness` property could not be read, the game crashed"
+
+import com.modrinth.minotaur.dependencies.ModDependency
+modrinth {
+    token = System.getenv("MODRINTH_API_KEY")
+    projectId = "of7wIinq"
+    versionNumber = version
+    versionType = "beta"
+    versionName = "SnowyLeavesPlus ${version}"
+    uploadFile = remapJar
+    changelog
+    gameVersions = [project.minecraft_version]
+    loaders = ["fabric"]
+    dependencies = [new ModDependency("P7dR8mSH", "required")]
+}
+
+curseforge {
+    apiKey = System.getenv("CURSEFORGE_API_TOKEN")
+    project {
+        id = "611998"
+        releaseType = "beta"
+        addGameVersion(project.minecraft_version)
+        addGameVersion("Fabric")
+        mainArtifact(jar) {
+            changelogType = "markdown"
+            changelog
+            displayName = "SnowyLeavesPlus ${version}"
+        }
+        relations {
+            requiredDependency("fabric-api")
+        }
+    }
+}

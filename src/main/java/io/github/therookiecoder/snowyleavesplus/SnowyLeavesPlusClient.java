@@ -18,13 +18,17 @@ public class SnowyLeavesPlusClient implements ClientModInitializer {
             (state, world, pos, index) -> {
                 // Get the block's default colour
                 int colour = getLeafBlockColour(state.getBlock(), world, pos);
-                return switch (state.get(SNOWINESS)) {
-                    case none -> colour;
-                    case low -> whiten(colour, 0.25f);
-                    case medium -> whiten(colour, 0.5f);
-                    case high -> whiten(colour, 0.75f);
-                    case full -> 0xffffff;
-                };
+                try {
+                    return switch (state.get(SNOWINESS)) {
+                        case none -> colour;
+                        case low -> whiten(colour, 0.25f);
+                        case medium -> whiten(colour, 0.5f);
+                        case high -> whiten(colour, 0.75f);
+                        case full -> 0xffffff;
+                    };
+                } catch(Exception e) {
+                    return colour;
+                }
             },
             Blocks.ACACIA_LEAVES,
             Blocks.AZALEA_LEAVES,
