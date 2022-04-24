@@ -65,7 +65,7 @@ curseforge {
         releaseType = "beta"
         addGameVersion(project.minecraft_version)
         addGameVersion("Fabric")
-        mainArtifact(jar) {
+        mainArtifact(remapJar) {
             changelogType = "markdown"
             changelog
             displayName = "SnowyLeavesPlus ${version}"
