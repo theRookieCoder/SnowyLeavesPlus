@@ -1,6 +1,6 @@
 plugins {
     id 'fabric-loom' version '0.12-SNAPSHOT'
-    id 'com.modrinth.minotaur' version '2.+'
+    id 'com.modrinth.minotaur' version '2.3.+'
     id 'com.matthewprenger.cursegradle' version '1.4.+'
 }
 
@@ -8,9 +8,9 @@ version = project.mod_version
 group = project.maven_group
 
 dependencies {
-    // Change versions in gradle.properties
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    // Change these versions in gradle.properties
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 }
@@ -42,29 +42,32 @@ java {
 }
 
 // TODO: Update this every release
-def changelog = "Fixed a bug where if the `snowiness` property could not be read, the game crashed"
+def changelog = "Update to 1.19"
 
 import com.modrinth.minotaur.dependencies.ModDependency
 modrinth {
-    token = System.getenv("MODRINTH_API_KEY")
-    projectId = "of7wIinq"
-    versionNumber = version
-    versionType = "beta"
+    token = System.getenv("MODRINTH_TOKEN")
     versionName = "SnowyLeavesPlus ${version}"
+    versionNumber = version
+    projectId = "of7wIinq"
     uploadFile = remapJar
+    versionType = "beta"
     changelog
+    loaders = ["fabric", "quilt"]
     gameVersions = [project.minecraft_version]
-    loaders = ["fabric"]
+    syncBodyFrom = rootProject.file("README.md").text
+    // Required dependency, Fabric API
     dependencies = [new ModDependency("P7dR8mSH", "required")]
 }
 
 curseforge {
-    apiKey = System.getenv("CURSEFORGE_API_TOKEN")
+    apiKey = System.getenv("CURSEFORGE_TOKEN")
     project {
         id = "611998"
         releaseType = "beta"
         addGameVersion(project.minecraft_version)
         addGameVersion("Fabric")
+        addGameVersion("Quilt")
         mainArtifact(remapJar) {
             changelogType = "markdown"
             changelog

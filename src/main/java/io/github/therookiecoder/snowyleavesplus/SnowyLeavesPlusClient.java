@@ -19,13 +19,14 @@ public class SnowyLeavesPlusClient implements ClientModInitializer {
                 // Get the block's default colour
                 int colour = getLeafBlockColour(state.getBlock(), world, pos);
                 try {
-                    return switch (state.get(SNOWINESS)) {
-                        case none -> colour;
-                        case low -> whiten(colour, 0.25f);
-                        case medium -> whiten(colour, 0.5f);
-                        case high -> whiten(colour, 0.75f);
-                        case full -> 0xffffff;
-                    };
+                    return whiten(colour, switch (state.get(SNOWINESS)) {
+                        case none -> 0;
+                        case low -> 0.25;
+                        case medium -> 0.5;
+                        case high -> 0.75;
+                        case full -> 1;
+                    });
+                // If there is any error, return the default colour
                 } catch(Exception e) {
                     return colour;
                 }
@@ -61,11 +62,12 @@ public class SnowyLeavesPlusClient implements ClientModInitializer {
     /**
      * Whiten a colour based on a whiteness value
      * @param colour The colour to modify
-     * @param whiteness The amount to whiten the colour by, a whiteness of 0 would return the same colour, and a
-     *                  whiteness of 1 would return white (0x0ffffff)
+     * @param whiteness The amount to whiten the colour by.
+     *                  A whiteness of <code>0</code> would return the same colour, and a
+     *                  whiteness of <code>1</code> would return white (<code>0xffffff</code>)
      * @return The whitened colour
      */
-    private int whiten(int colour, float whiteness) {
+    private int whiten(int colour, double whiteness) {
         // Extract colour channels
         int red = (colour >> 16 & 0xff);
         int green = (colour >> 8 & 0xff);
