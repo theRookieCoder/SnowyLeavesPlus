@@ -1,3 +1,5 @@
+<img width="250" src="https://cdn.modrinth.com/data/of7wIinq/b7e6318e3f2e84fb2fc85c08ba24f37b1d59d79f.jpeg" align="right">
+
 # SnowyLeavesPlus
 
 In Bedrock Edition, leaves turn white when it is snowing.
