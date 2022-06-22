@@ -21,12 +21,18 @@ public class LeavesBlockMixin {
     // Add the snowiness property to leaf blocks
     @Inject(method = "appendProperties", at = @At("TAIL"))
     private void appendPropertiesInject(StateManager.Builder<Block, BlockState> builder, CallbackInfo ci) {
+        if (!this.getClass().equals(LeavesBlock.class)) {
+            return;
+        }
         builder.add(SNOWINESS);
     }
 
     // Set the default snowiness to none
     @Inject(method = "<init>", at = @At("TAIL"))
     private void initInject(AbstractBlock.Settings settings, CallbackInfo ci) {
+        if (!this.getClass().equals(LeavesBlock.class)) {
+            return;
+        }
         ((BlockInvoker) this)
             .invokeSetDefaultState(
                 ((LeavesBlock)(Object) this)
@@ -40,6 +46,9 @@ public class LeavesBlockMixin {
     // Always randomly tick leaf blocks
     @Inject(method = "hasRandomTicks", at = @At("RETURN"), cancellable = true)
     private void hasRandomTicksInject(BlockState state, CallbackInfoReturnable<Boolean> cir) {
+        if (!this.getClass().equals(LeavesBlock.class)) {
+            return;
+        }
         cir.setReturnValue(true);
     }
 
@@ -51,6 +60,9 @@ public class LeavesBlockMixin {
         Random random,
         CallbackInfo ci
     ) {
+        if (!this.getClass().equals(LeavesBlock.class)) {
+            return;
+        }
         Snowiness currentSnowiness = state.get(SNOWINESS);
         if (
             // If it's snowing
