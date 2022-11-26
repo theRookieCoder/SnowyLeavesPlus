@@ -1,6 +1,6 @@
 plugins {
-    id 'fabric-loom' version '0.12-SNAPSHOT'
-    id 'com.modrinth.minotaur' version '2.3.+'
+    id 'fabric-loom' version '1.0-SNAPSHOT'
+    id 'com.modrinth.minotaur' version '2.4.+'
     id 'com.matthewprenger.cursegradle' version '1.4.+'
 }
 
@@ -42,7 +42,7 @@ java {
 }
 
 // TODO: Update this every release
-def changelog = "Update to 1.19"
+def changelog = "Update to 1.19.2"
 
 import com.modrinth.minotaur.dependencies.ModDependency
 modrinth {
@@ -56,7 +56,7 @@ modrinth {
     loaders = ["fabric", "quilt"]
     gameVersions = [project.minecraft_version]
     syncBodyFrom = rootProject.file("README.md").text
-    // Required dependency, Fabric API
+    // Required dependency Fabric API
     dependencies = [new ModDependency("P7dR8mSH", "required")]
 }
 
