@@ -42,7 +42,7 @@ java {
 }
 
 // TODO: Update this every release
-def changelog = "Update to 1.19.2"
+def changelog = "Update to 1.19.3"
 
 import com.modrinth.minotaur.dependencies.ModDependency
 modrinth {
@@ -54,7 +54,7 @@ modrinth {
     versionType = "beta"
     changelog
     loaders = ["fabric", "quilt"]
-    gameVersions = [project.minecraft_version]
+    gameVersions = ["1.19", "1.19.1", "1.19.2", "1.19.3"]
     syncBodyFrom = rootProject.file("README.md").text
     // Required dependency Fabric API
     dependencies = [new ModDependency("P7dR8mSH", "required")]
@@ -65,7 +65,10 @@ curseforge {
     project {
         id = "611998"
         releaseType = "beta"
-        addGameVersion(project.minecraft_version)
+        addGameVersion("1.19")
+        addGameVersion("1.19.1")
+        addGameVersion("1.19.2")
+        addGameVersion("1.19.3")
         addGameVersion("Fabric")
         addGameVersion("Quilt")
         mainArtifact(remapJar) {

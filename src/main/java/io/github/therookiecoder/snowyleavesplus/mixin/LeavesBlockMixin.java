@@ -18,21 +18,21 @@ import static io.github.therookiecoder.snowyleavesplus.Snowiness.SNOWINESS;
 
 @Mixin(LeavesBlock.class)
 public class LeavesBlockMixin {
-    private boolean runCheck() {
-        return !this.getClass().equals(LeavesBlock.class);
+    private boolean isLeavesBlock() {
+        return this.getClass().equals(LeavesBlock.class);
     }
 
     // Add the snowiness property to leaf blocks
     @Inject(method = "appendProperties", at = @At("TAIL"))
     private void appendPropertiesInject(StateManager.Builder<Block, BlockState> builder, CallbackInfo ci) {
-        if (runCheck()) return;
+        if (!isLeavesBlock()) return;
         builder.add(SNOWINESS);
     }
 
     // Set the default snowiness to none
     @Inject(method = "<init>", at = @At("TAIL"))
     private void initInject(AbstractBlock.Settings settings, CallbackInfo ci) {
-        if (runCheck()) return;
+        if (!isLeavesBlock()) return;
         ((BlockInvoker) this)
             .invokeSetDefaultState(
                 ((LeavesBlock)(Object) this)
@@ -46,7 +46,9 @@ public class LeavesBlockMixin {
     // Always randomly tick leaf blocks
     @Inject(method = "hasRandomTicks", at = @At("RETURN"), cancellable = true)
     private void hasRandomTicksInject(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-        if (runCheck()) cir.setReturnValue(true);
+        if (isLeavesBlock()) {
+            cir.setReturnValue(true);
+        }
     }
 
     @Inject(method = "randomTick", at = @At("HEAD"))
@@ -57,7 +59,7 @@ public class LeavesBlockMixin {
         Random random,
         CallbackInfo ci
     ) {
-        if (runCheck()) return;
+        if (!isLeavesBlock()) return;
         Snowiness currentSnowiness = state.get(SNOWINESS);
         if (
             // If it's snowing
