@@ -8,9 +8,15 @@ When it is snowing, leaves will slowly turn white, and when it is not, they will
 
 ## Installation
 
-You can install SnowyLeavesPlus by downloading it and Fabric API from [Modrinth](https://modrinth.com/mod/snowyleavesplus), [CurseForge](https://www.curseforge.com/minecraft/mc-mods/snowyleavesplus) or [GitHub Releases](https://github.com/theRookieCoder/SnowyLeavesPlus/releases).
-You can also use a mod manager like [GDLauncher](https://gdlauncher.com/), [Prism Launcher](https://prismlauncher.org/), or my own [Ferium](https://github.com/gorilla-devs/ferium).
-Put the mod files in your `mods` folder, and load Minecraft using [Fabric](https://fabricmc.net/use/installer/) or [Quilt](https://quiltmc.org/install/).
+You can install SnowyLeavesPlus by downloading it from any of the following:
+
+[![Modrinth](https://img.shields.io/modrinth/dt/snowyleavesplus?style=for-the-badge&color=CCFFCC&logo=modrinth)](https://modrinth.com/mod/snowyleavesplus)
+[![GitHub Releases](https://img.shields.io/github/downloads/theRookieCoder/SnowyLeavesPlus/total?color=B2BEB5&style=for-the-badge&logo=github)](https://github.com/theRookieCoder/SnowyLeavesPlus/releases)
+[![CurseForge](https://cf.way2muchnoise.eu/full_snowyleavesplus_downloads.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/snowyleavesplus)
+
+You will also need Fabric API. Put the mod files in your `mods` folder, and load Minecraft using [Fabric](https://fabricmc.net/use/installer) or [Quilt](https://quiltmc.org/en/install).
+
+You can also use a mod manager like [GDLauncher](https://gdlauncher.com), [Prism Launcher](https://prismlauncher.org), or my own [ferium](https://github.com/gorilla-devs/ferium).
 
 ## Compiling from Source
 
