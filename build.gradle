@@ -42,7 +42,7 @@ java {
 }
 
 // TODO: Update this every release
-def changelog = "Update to 1.19.3"
+def changelog = "Backport to 1.18.2"
 
 import com.modrinth.minotaur.dependencies.ModDependency
 modrinth {
