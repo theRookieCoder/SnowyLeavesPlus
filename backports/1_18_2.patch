@@ -1,0 +1,87 @@
+diff --git a/build.gradle b/build.gradle
+index f461934..00328a6 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -54,7 +54,7 @@ modrinth {
+     versionType = "beta"
+     changelog
+     loaders = ["fabric", "quilt"]
+-    gameVersions = ["1.19", "1.19.1", "1.19.2", "1.19.3"]
++    gameVersions = ["1.18.2"]
+     syncBodyFrom = rootProject.file("README.md").text
+     // Required dependency Fabric API
+     dependencies = [new ModDependency("P7dR8mSH", "required")]
+@@ -65,10 +65,9 @@ curseforge {
+     project {
+         id = "611998"
+         releaseType = "beta"
+-        addGameVersion("1.19")
+-        addGameVersion("1.19.1")
+-        addGameVersion("1.19.2")
+-        addGameVersion("1.19.3")
++        addGameVersion("1.18.2")
+         addGameVersion("Fabric")
+         addGameVersion("Quilt")
+         mainArtifact(remapJar) {
+diff --git a/gradle.properties b/gradle.properties
+index 3dbaef3..163d728 100644
+--- a/gradle.properties
++++ b/gradle.properties
+@@ -1,10 +1,10 @@
+ org.gradle.jvmargs=-Xmx2G
+ 
+ # Fabric Properties (https://fabricmc.net/develop)
+-minecraft_version=1.19.3
+-yarn_mappings=1.19.3+build.5
++minecraft_version=1.18.2
++yarn_mappings=1.18.2+build.4
+ loader_version=0.14.13
+-fabric_version=0.73.0+1.19.3
++fabric_version=0.67.0+1.18.2
+ 
+ # Mod Properties
+ mod_version=0.1.5
+diff --git a/src/main/java/io/github/therookiecoder/snowyleavesplus/mixin/LeavesBlockMixin.java b/src/main/java/io/github/therookiecoder/snowyleavesplus/mixin/LeavesBlockMixin.java
+index 8a968b9..1602df2 100644
+--- a/src/main/java/io/github/therookiecoder/snowyleavesplus/mixin/LeavesBlockMixin.java
++++ b/src/main/java/io/github/therookiecoder/snowyleavesplus/mixin/LeavesBlockMixin.java
+@@ -5,7 +5,7 @@ import net.minecraft.block.*;
+ import net.minecraft.server.world.ServerWorld;
+ import net.minecraft.state.StateManager;
+ import net.minecraft.util.math.BlockPos;
+-import net.minecraft.util.math.random.Random;
++import java.util.Random;
+ import net.minecraft.world.LightType;
+ import net.minecraft.world.biome.Biome;
+ import org.spongepowered.asm.mixin.Mixin;
+diff --git a/src/main/resources/fabric.mod.json b/src/main/resources/fabric.mod.json
+index 1d7cfb4..0133fb4 100644
+--- a/src/main/resources/fabric.mod.json
++++ b/src/main/resources/fabric.mod.json
+@@ -21,7 +21,7 @@
+   "mixins": ["SnowyLeavesPlus.mixins.json"],
+   "depends": {
+     "fabricloader": "*",
+-    "fabric-api": "*",
+-    "minecraft": "~1.19"
++    "fabric": "*",
++    "minecraft": "1.18.2"
+   }
+ }
+diff --git a/src/main/resources/quilt.mod.json b/src/main/resources/quilt.mod.json
+index d121f9a..08e2ad8 100644
+--- a/src/main/resources/quilt.mod.json
++++ b/src/main/resources/quilt.mod.json
+@@ -9,10 +9,10 @@
+     },
+     "depends": [
+       "fabricloader",
+-      "fabric-api",
++      "fabric",
+       {
+         "id": "minecraft",
+-        "versions": "~1.19"
++        "versions": "1.18.2"
+       }
+     ],
+     "intermediate_mappings": "net.fabricmc:intermediary",
