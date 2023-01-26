@@ -21,7 +21,7 @@
   "mixins": ["SnowyLeavesPlus.mixins.json"],
   "depends": {
     "fabricloader": "*",
-    "fabric": "*",
+    "fabric-api": "*",
     "minecraft": "~1.19"
   }
 }

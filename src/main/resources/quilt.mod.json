@@ -9,7 +9,7 @@
     },
     "depends": [
       "fabricloader",
-      "fabric",
+      "fabric-api",
       {
         "id": "minecraft",
         "versions": "~1.19"
