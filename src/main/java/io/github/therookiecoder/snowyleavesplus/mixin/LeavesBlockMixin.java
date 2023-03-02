@@ -64,10 +64,10 @@ public class LeavesBlockMixin {
         if (
             // If it's snowing
             world.isRaining()
-            && world.getBiome(pos).value().getPrecipitation() == Biome.Precipitation.SNOW
+            && world.getBiome(pos).value().getPrecipitation(pos) == Biome.Precipitation.SNOW
         ) {
             // And the block is at least somewhat exposed to the sky
-            if (world.getLightLevel(LightType.SKY, pos) > 12) {
+            if (world.getLightLevel(LightType.SKY, pos) > 10) {
                 // Make it more snowy
                 world.setBlockState(pos, state.with(SNOWINESS, currentSnowiness.increaseSnowiness()));
             }
