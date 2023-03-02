@@ -25,11 +25,3 @@ Prerequisites: JDK 17
 1. Clone this repository by running `git clone https://github.com/theRookieCoder/SnowyLeavesPlus` or `gh repo clone theRookieCoder/SnowyLeavesPlus`
 2. Build the project by running `./gradlew build`
 3. The mod jar file can be found at `build/libs/`
-
-## Backport System
-
-The code currently works for `1.19.x` versions of the Minecraft. (i.e. `1.19`, `1.19.1`, `1.19.2`, and `1.19.3`)
-
-Applying `backports/1_18_2.patch` will make the mod work for `1.18.2` only.
-
-Applying `backports/1_18_1.patch` will make the mod work for `1.18` and `1.18.2`.
