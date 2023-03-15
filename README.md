@@ -12,7 +12,7 @@ You can install SnowyLeavesPlus by downloading it from any of the following:
 
 [![Modrinth](https://img.shields.io/modrinth/dt/snowyleavesplus?style=for-the-badge&color=CCFFCC&logo=modrinth)](https://modrinth.com/mod/snowyleavesplus)
 [![GitHub Releases](https://img.shields.io/github/downloads/theRookieCoder/SnowyLeavesPlus/total?color=B2BEB5&style=for-the-badge&logo=github)](https://github.com/theRookieCoder/SnowyLeavesPlus/releases)
-[![CurseForge](https://cf.way2muchnoise.eu/full_snowyleavesplus_downloads.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/snowyleavesplus)
+[![CurseForge](https://cf.way2muchnoise.eu/short_snowyleavesplus_downloads.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/snowyleavesplus)
 
 You will also need (Quilted) Fabric API. Put the mod files in your `mods` folder, and load Minecraft using [Fabric](https://fabricmc.net/use/installer) or [Quilt](https://quiltmc.org/en/install).
 
