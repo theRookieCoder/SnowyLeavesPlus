@@ -10,7 +10,8 @@ public enum Snowiness implements StringIdentifiable {
     high,
     full;
 
-    public static final EnumProperty<Snowiness> SNOWINESS = EnumProperty.of("snowiness", Snowiness.class);
+    public static final EnumProperty<Snowiness> SNOWINESS =
+        EnumProperty.of("snowiness", Snowiness.class);
 
     @Override
     public String asString() {

@@ -41,9 +41,6 @@ java {
     withSourcesJar()
 }
 
-// TODO: Update this every release
-def changelog = "Backport to 1.18.2"
-
 import com.modrinth.minotaur.dependencies.ModDependency
 modrinth {
     token = System.getenv("MODRINTH_TOKEN")
@@ -52,12 +49,10 @@ modrinth {
     projectId = "of7wIinq"
     uploadFile = remapJar
     versionType = "beta"
-    changelog
     loaders = ["fabric", "quilt"]
-    gameVersions = ["1.19", "1.19.1", "1.19.2", "1.19.3"]
+    gameVersions = ["1.19.4"]
     syncBodyFrom = rootProject.file("README.md").text
-    // Required dependency Fabric API
-    dependencies = [new ModDependency("P7dR8mSH", "required")]
+    dependencies = [new ModDependency("fabric-api", "required")]
 }
 
 curseforge {
@@ -65,19 +60,13 @@ curseforge {
     project {
         id = "611998"
         releaseType = "beta"
-        addGameVersion("1.19")
-        addGameVersion("1.19.1")
-        addGameVersion("1.19.2")
-        addGameVersion("1.19.3")
+        addGameVersion("1.19.4")
         addGameVersion("Fabric")
         addGameVersion("Quilt")
         mainArtifact(remapJar) {
             changelogType = "markdown"
-            changelog
             displayName = "SnowyLeavesPlus ${version}"
         }
-        relations {
-            requiredDependency("fabric-api")
-        }
+        relations { requiredDependency("fabric-api") }
     }
 }

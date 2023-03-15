@@ -12,16 +12,14 @@
   },
   "license": "MPL-2.0",
   "icon": "assets/snowyleavesplus/icon.png",
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
-    "client": [
-      "io.github.therookiecoder.snowyleavesplus.SnowyLeavesPlusClient"
-    ]
+    "client": ["io.github.therookiecoder.snowyleavesplus.SnowyLeavesPlusClient"]
   },
-  "mixins": ["SnowyLeavesPlus.mixins.json"],
+  "mixins": ["snowyleavesplus.mixins.json"],
   "depends": {
     "fabricloader": "*",
     "fabric-api": "*",
-    "minecraft": "~1.19"
+    "minecraft": "1.19.4"
   }
 }

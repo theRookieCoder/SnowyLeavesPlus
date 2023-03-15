@@ -19,31 +19,29 @@ public class SnowyLeavesPlusClient implements ClientModInitializer {
                 // Get the block's default colour
                 int colour = getLeafBlockColour(state.getBlock(), world, pos);
                 try {
-                    return whiten(colour, switch (state.get(SNOWINESS)) {
-                        case none -> 0;
-                        case low -> 0.25;
-                        case medium -> 0.5;
-                        case high -> 0.75;
-                        case full -> 1;
-                    });
+                    return whiten(colour,
+                        (double) state.get(SNOWINESS).ordinal() / Snowiness.values().length);
                 // If there is any error, return the default colour
                 } catch(Exception e) {
                     return colour;
                 }
             },
-            Blocks.ACACIA_LEAVES,
-            Blocks.AZALEA_LEAVES,
+            Blocks.OAK_LEAVES,
+            Blocks.SPRUCE_LEAVES,
             Blocks.BIRCH_LEAVES,
             Blocks.JUNGLE_LEAVES,
-            Blocks.OAK_LEAVES,
+            Blocks.ACACIA_LEAVES,
+            Blocks.CHERRY_LEAVES,
             Blocks.DARK_OAK_LEAVES,
-            Blocks.FLOWERING_AZALEA_LEAVES,
-            Blocks.SPRUCE_LEAVES
+            Blocks.MANGROVE_LEAVES,
+            Blocks.AZALEA_LEAVES,
+            Blocks.FLOWERING_AZALEA_LEAVES
         );
     }
 
     /**
-     * Derived from the colour providers registered by Minecraft
+     * Based on code from Minecraft's registered colour providers.
+     * @see net.minecraft.client.color.block.BlockColors
      * @param block The block to get the colour of
      * @param world The current world
      * @param pos The position of the block
@@ -54,8 +52,16 @@ public class SnowyLeavesPlusClient implements ClientModInitializer {
             return FoliageColors.getBirchColor();
         } else if (block == Blocks.SPRUCE_LEAVES) {
             return FoliageColors.getSpruceColor();
+        } else if (
+            block == Blocks.OAK_LEAVES
+                || block == Blocks.JUNGLE_LEAVES
+                || block == Blocks.ACACIA_LEAVES
+                || block == Blocks.DARK_OAK_LEAVES
+                || block == Blocks.MANGROVE_LEAVES) {
+            return world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor();
         } else {
-            return world != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor();
+            // TODO: Actually get the default colour
+            return world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor();
         }
     }
 
