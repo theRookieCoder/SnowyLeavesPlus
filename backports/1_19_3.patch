@@ -1,0 +1,99 @@
+diff --git a/build.gradle b/build.gradle
+index e900ac8..1282a56 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -50,7 +50,7 @@ modrinth {
+     uploadFile = remapJar
+     versionType = "beta"
+     loaders = ["fabric", "quilt"]
+-    gameVersions = ["1.19.4"]
++    gameVersions = ["1.19", "1.19.1", "1.19.2", "1.19.3"]
+     syncBodyFrom = rootProject.file("README.md").text
+     dependencies = [new ModDependency("fabric-api", "required")]
+ }
+@@ -62,7 +62,10 @@ curseforge {
+         releaseType = "beta"
+         addGameVersion("Fabric")
+         addGameVersion("Quilt")
+-        addGameVersion("1.19.4")
++        addGameVersion("1.19")
++        addGameVersion("1.19.1")
++        addGameVersion("1.19.2")
++        addGameVersion("1.19.3")
+         mainArtifact(remapJar) {
+             displayName = "SnowyLeavesPlus ${version} for Minecraft ${project.minecraft_version}"
+         }
+diff --git a/gradle.properties b/gradle.properties
+index 2c41f14..1add2ad 100644
+--- a/gradle.properties
++++ b/gradle.properties
+@@ -1,10 +1,10 @@
+ org.gradle.jvmargs=-Xmx2G
+ 
+ # Fabric Properties (https://fabricmc.net/develop)
+-minecraft_version=1.19.4
+-yarn_mappings=1.19.4+build.1
++minecraft_version=1.19.3
++yarn_mappings=1.19.3+build.5
+ loader_version=0.14.17
+-fabric_version=0.76.0+1.19.4
++fabric_version=0.76.0+1.19.3
+ 
+ # Mod Properties
+ mod_version=0.1.5
+diff --git a/src/main/java/io/github/therookiecoder/snowyleavesplus/SnowyLeavesPlusClient.java b/src/main/java/io/github/therookiecoder/snowyleavesplus/SnowyLeavesPlusClient.java
+index 289d201..b31f1dd 100644
+--- a/src/main/java/io/github/therookiecoder/snowyleavesplus/SnowyLeavesPlusClient.java
++++ b/src/main/java/io/github/therookiecoder/snowyleavesplus/SnowyLeavesPlusClient.java
+@@ -31,7 +31,6 @@ public class SnowyLeavesPlusClient implements ClientModInitializer {
+             Blocks.BIRCH_LEAVES,
+             Blocks.JUNGLE_LEAVES,
+             Blocks.ACACIA_LEAVES,
+-            Blocks.CHERRY_LEAVES,
+             Blocks.DARK_OAK_LEAVES,
+             Blocks.MANGROVE_LEAVES,
+             Blocks.AZALEA_LEAVES,
+diff --git a/src/main/java/io/github/therookiecoder/snowyleavesplus/mixin/LeavesBlockMixin.java b/src/main/java/io/github/therookiecoder/snowyleavesplus/mixin/LeavesBlockMixin.java
+index e7b6011..0ce2bcf 100644
+--- a/src/main/java/io/github/therookiecoder/snowyleavesplus/mixin/LeavesBlockMixin.java
++++ b/src/main/java/io/github/therookiecoder/snowyleavesplus/mixin/LeavesBlockMixin.java
+@@ -64,7 +64,7 @@ public class LeavesBlockMixin {
+         if (
+             // If it's snowing
+             world.isRaining()
+-            && world.getBiome(pos).value().getPrecipitation(pos) == Biome.Precipitation.SNOW
++            && world.getBiome(pos).value().getPrecipitation() == Biome.Precipitation.SNOW
+         ) {
+             // And the block is (somewhat) exposed to the sky
+             if (world.getLightLevel(LightType.SKY, pos) > 10) {
+diff --git a/src/main/resources/fabric.mod.json b/src/main/resources/fabric.mod.json
+index e57f3b0..e9d140c 100644
+--- a/src/main/resources/fabric.mod.json
++++ b/src/main/resources/fabric.mod.json
+@@ -18,7 +18,7 @@
+   "mixins": ["snowyleavesplus.mixins.json"],
+   "depends": {
+     "fabricloader": "*",
+-    "fabric-api": "*",
+-    "minecraft": "1.19.4"
++    "fabric": "*",
++    "minecraft": ["1.19", "1.19.1", "1.19.2", "1.19.3"]
+   }
+ }
+diff --git a/src/main/resources/quilt.mod.json b/src/main/resources/quilt.mod.json
+index 4e38568..3ba52c1 100644
+--- a/src/main/resources/quilt.mod.json
++++ b/src/main/resources/quilt.mod.json
+@@ -9,10 +9,10 @@
+     },
+     "depends": [
+       "fabricloader",
+-      "fabric-api",
++      "fabric",
+       {
+         "id": "minecraft",
+-        "versions": "1.19.4"
++        "versions": ["1.19", "1.19.1", "1.19.2", "1.19.3"]
+       }
+     ],
+     "intermediate_mappings": "net.fabricmc:intermediary",
