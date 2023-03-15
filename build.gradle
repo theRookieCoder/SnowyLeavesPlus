@@ -44,8 +44,8 @@ java {
 import com.modrinth.minotaur.dependencies.ModDependency
 modrinth {
     token = System.getenv("MODRINTH_TOKEN")
-    versionName = "SnowyLeavesPlus ${version}"
-    versionNumber = version
+    versionName = "SnowyLeavesPlus ${version} for Minecraft ${project.minecraft_version}"
+    versionNumber = "${version}-mc${project.minecraft_version}"
     projectId = "of7wIinq"
     uploadFile = remapJar
     versionType = "beta"
@@ -60,12 +60,11 @@ curseforge {
     project {
         id = "611998"
         releaseType = "beta"
-        addGameVersion("1.19.4")
         addGameVersion("Fabric")
         addGameVersion("Quilt")
+        addGameVersion("1.19.4")
         mainArtifact(remapJar) {
-            changelogType = "markdown"
-            displayName = "SnowyLeavesPlus ${version}"
+            displayName = "SnowyLeavesPlus ${version} for Minecraft ${project.minecraft_version}"
         }
         relations { requiredDependency("fabric-api") }
     }

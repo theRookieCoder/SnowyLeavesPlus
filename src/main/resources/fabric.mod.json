@@ -12,7 +12,6 @@
   },
   "license": "MPL-2.0",
   "icon": "assets/snowyleavesplus/icon.png",
-  "environment": "client",
   "entrypoints": {
     "client": ["io.github.therookiecoder.snowyleavesplus.SnowyLeavesPlusClient"]
   },
