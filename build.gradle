@@ -45,7 +45,7 @@ import com.modrinth.minotaur.dependencies.ModDependency
 modrinth {
     token = System.getenv("MODRINTH_TOKEN")
     versionName = "SnowyLeavesPlus ${version} for Minecraft ${project.minecraft_version}"
-    versionNumber = "${version}-mc${project.minecraft_version}"
+    versionNumber = "mc${project.minecraft_version}-${version}"
     projectId = "of7wIinq"
     uploadFile = remapJar
     versionType = "beta"
