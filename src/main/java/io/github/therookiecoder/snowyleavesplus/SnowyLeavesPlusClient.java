@@ -52,6 +52,15 @@ public class SnowyLeavesPlusClient implements ClientModInitializer {
             return FoliageColors.getBirchColor();
         } else if (block == Blocks.SPRUCE_LEAVES) {
             return FoliageColors.getSpruceColor();
+        } else if (block == Blocks.CHERRY_LEAVES) {
+            // use of placeholder (#f09bc8) when using experimental features
+            // TODO: use FoliageColors.getCherryColor() when available
+            return 15768520;
+        } else if (
+            block == Blocks.AZALEA_LEAVES
+                || block == Blocks.FLOWERING_AZALEA_LEAVES) {
+            // TODO: find a specific colour if applicable
+            return world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor();
         } else if (
             block == Blocks.OAK_LEAVES
                 || block == Blocks.JUNGLE_LEAVES
@@ -59,7 +68,8 @@ public class SnowyLeavesPlusClient implements ClientModInitializer {
                 || block == Blocks.DARK_OAK_LEAVES
                 || block == Blocks.MANGROVE_LEAVES) {
             return world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor();
-        } else {
+        }
+        else {
             // TODO: Actually get the default colour
             return world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor();
         }
