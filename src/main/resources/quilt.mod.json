@@ -12,7 +12,7 @@
       "fabric-api",
       {
         "id": "minecraft",
-        "versions": ["1.19.4", "1.20"]
+        "versions": ["1.19.4", "1.20", "1.20.1"]
       }
     ],
     "intermediate_mappings": "net.fabricmc:intermediary",

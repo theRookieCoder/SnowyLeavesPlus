@@ -9,6 +9,7 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LightType;
 import net.minecraft.world.biome.Biome;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -18,6 +19,7 @@ import static io.github.therookiecoder.snowyleavesplus.Snowiness.SNOWINESS;
 
 @Mixin(LeavesBlock.class)
 public class LeavesBlockMixin {
+    @Unique
     private boolean isLeavesBlock() {
         return this.getClass().equals(LeavesBlock.class);
     }
