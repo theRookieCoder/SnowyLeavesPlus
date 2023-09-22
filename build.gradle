@@ -50,7 +50,7 @@ modrinth {
     uploadFile = remapJar
     versionType = "beta"
     loaders = ["fabric", "quilt"]
-    gameVersions = ["1.19.4", "1.20", "1.20.1"]
+    gameVersions = ["1.19.4", "1.20", "1.20.1", "1.20.2"]
     syncBodyFrom = rootProject.file("README.md").text
     dependencies = [new ModDependency("fabric-api", "required")]
 }
@@ -65,6 +65,7 @@ curseforge {
         addGameVersion("1.19.4")
         addGameVersion("1.20")
         addGameVersion("1.20.1")
+        addGameVersion("1.20.2")
         mainArtifact(remapJar) {
             displayName = "SnowyLeavesPlus ${version} for Minecraft ${project.minecraft_version}"
         }
