@@ -55,7 +55,7 @@ public class SnowyLeavesPlusClient implements ClientModInitializer {
         } else if (block == Blocks.CHERRY_LEAVES) {
             // use of placeholder (#f09bc8) when using experimental features
             // TODO: use FoliageColors.getCherryColor() when available
-            return 15768520;
+            return 16566245;
         } else if (
             block == Blocks.AZALEA_LEAVES
                 || block == Blocks.FLOWERING_AZALEA_LEAVES) {
