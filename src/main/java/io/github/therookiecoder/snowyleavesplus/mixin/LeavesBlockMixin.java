@@ -10,6 +10,7 @@ import net.minecraft.world.LightType;
 import net.minecraft.world.biome.Biome;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -17,27 +18,35 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static io.github.therookiecoder.snowyleavesplus.Snowiness.SNOWINESS;
 
+
+@Mixin(Block.class)
+interface BlockInvoker {
+    @Invoker("setDefaultState")
+    void invokeSetDefaultState(BlockState state);
+}
+
 @Mixin(LeavesBlock.class)
-public class LeavesBlockMixin {
+public abstract class LeavesBlockMixin {
     @Unique
-    private boolean isLeavesBlock() {
-        return this.getClass().equals(LeavesBlock.class);
+    boolean shouldModify() {
+        return this.getClass().equals(LeavesBlock.class)
+            || this.getClass().equals(MangroveLeavesBlock.class);
     }
 
     // Add the snowiness property to leaf blocks
     @Inject(method = "appendProperties", at = @At("TAIL"))
     private void appendPropertiesInject(StateManager.Builder<Block, BlockState> builder, CallbackInfo ci) {
-        if (!isLeavesBlock()) return;
+        if (!shouldModify()) return;
         builder.add(SNOWINESS);
     }
 
     // Set the default snowiness to none
     @Inject(method = "<init>", at = @At("TAIL"))
     private void initInject(AbstractBlock.Settings settings, CallbackInfo ci) {
-        if (!isLeavesBlock()) return;
+        if (!shouldModify()) return;
         ((BlockInvoker) this)
             .invokeSetDefaultState(
-                ((LeavesBlock)(Object) this)
+                ((Block)(Object) this)
                     .getDefaultState().with(
                         SNOWINESS,
                         Snowiness.none
@@ -45,12 +54,10 @@ public class LeavesBlockMixin {
             );
     }
 
-    // Always randomly tick leaf blocks
+    // Always randomly tick appropriate blocks
     @Inject(method = "hasRandomTicks", at = @At("RETURN"), cancellable = true)
     private void hasRandomTicksInject(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-        if (isLeavesBlock()) {
-            cir.setReturnValue(true);
-        }
+        cir.setReturnValue(shouldModify());
     }
 
     @Inject(method = "randomTick", at = @At("HEAD"))
@@ -61,18 +68,19 @@ public class LeavesBlockMixin {
         Random random,
         CallbackInfo ci
     ) {
-        if (!isLeavesBlock()) return;
+        if (!shouldModify()) return;
+
         Snowiness currentSnowiness = state.get(SNOWINESS);
         if (
-            // If it's snowing
+            // If it's 'raining'
             world.isRaining()
-            && world.getBiome(pos).value().getPrecipitation(pos) == Biome.Precipitation.SNOW
+                // And the block is in a snowy biome
+                && world.getBiome(pos).value().getPrecipitation(pos) == Biome.Precipitation.SNOW
+                // And the block is (somewhat) exposed to the sky
+                && world.getLightLevel(LightType.SKY, pos) > 10
         ) {
-            // And the block is (somewhat) exposed to the sky
-            if (world.getLightLevel(LightType.SKY, pos) > 10) {
-                // Make it more snowy
-                world.setBlockState(pos, state.with(SNOWINESS, currentSnowiness.increaseSnowiness()));
-            }
+            // Make it more snowy
+            world.setBlockState(pos, state.with(SNOWINESS, currentSnowiness.increaseSnowiness()));
         } else {
             // Else make it less snowy
             world.setBlockState(pos, state.with(SNOWINESS, currentSnowiness.decreaseSnowiness()));

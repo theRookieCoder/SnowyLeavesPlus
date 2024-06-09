@@ -5,9 +5,9 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
+import net.minecraft.world.biome.FoliageColors;
 
 import static io.github.therookiecoder.snowyleavesplus.Snowiness.SNOWINESS;
 
@@ -31,7 +31,6 @@ public class SnowyLeavesPlusClient implements ClientModInitializer {
             Blocks.BIRCH_LEAVES,
             Blocks.JUNGLE_LEAVES,
             Blocks.ACACIA_LEAVES,
-            Blocks.CHERRY_LEAVES,
             Blocks.DARK_OAK_LEAVES,
             Blocks.MANGROVE_LEAVES,
             Blocks.AZALEA_LEAVES,
@@ -52,15 +51,9 @@ public class SnowyLeavesPlusClient implements ClientModInitializer {
             return FoliageColors.getBirchColor();
         } else if (block == Blocks.SPRUCE_LEAVES) {
             return FoliageColors.getSpruceColor();
-        } else if (
-            block == Blocks.OAK_LEAVES
-                || block == Blocks.JUNGLE_LEAVES
-                || block == Blocks.ACACIA_LEAVES
-                || block == Blocks.DARK_OAK_LEAVES
-                || block == Blocks.MANGROVE_LEAVES) {
-            return world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor();
+        } else if (block == Blocks.MANGROVE_LEAVES) {
+            return FoliageColors.getMangroveColor();
         } else {
-            // TODO: Actually get the default colour
             return world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor();
         }
     }
