@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.4-SNAPSHOT'
+    id 'fabric-loom' version '1.6-SNAPSHOT'
     id 'com.modrinth.minotaur' version '2.8.+'
     id 'com.matthewprenger.cursegradle' version '1.4.+'
 }
@@ -24,7 +24,7 @@ processResources {
     }
 }
 
-def targetJavaVersion = 17
+def targetJavaVersion = 21
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
@@ -41,6 +41,7 @@ java {
     withSourcesJar()
 }
 
+// Somehow this thing work but not with curseforge
 import com.modrinth.minotaur.dependencies.ModDependency
 modrinth {
     token = System.getenv("MODRINTH_TOKEN")
@@ -50,27 +51,33 @@ modrinth {
     uploadFile = remapJar
     versionType = "beta"
     loaders = ["fabric", "quilt"]
-    gameVersions = ["1.19.4", "1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4"]
+    gameVersions = ["1.19.4", "1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.20.6"]
     syncBodyFrom = rootProject.file("README.md").text
     dependencies = [new ModDependency("fabric-api", "required")]
 }
 
-curseforge {
-    apiKey = System.getenv("CURSEFORGE_TOKEN")
-    project {
-        id = "611998"
-        releaseType = "beta"
-        addGameVersion("Fabric")
-        addGameVersion("Quilt")
-        addGameVersion("1.19.4")
-        addGameVersion("1.20")
-        addGameVersion("1.20.1")
-        addGameVersion("1.20.2")
-        addGameVersion("1.20.3")
-        addGameVersion("1.20.4")
-        mainArtifact(remapJar) {
-            displayName = "SnowyLeavesPlus ${version} for Minecraft ${project.minecraft_version}"
-        }
-        relations { requiredDependency("fabric-api") }
-    }
-}
+// I Don't have apikey so you'll need set this by yourself.
+// This is the error i have :
+//  A problem occurred configuring root project 'SnowyLeavesPlus-master'.
+// > apiKey not set for project 611998
+
+//curseforge {
+//    apiKey = System.getenv("CURSEFORGE_TOKEN")
+//    project {
+//        id = "611998"
+//        releaseType = "beta"
+//        addGameVersion("Fabric")
+//        addGameVersion("Quilt")
+//        addGameVersion("1.19.4")
+//        addGameVersion("1.20")
+//        addGameVersion("1.20.1")
+//        addGameVersion("1.20.2")
+//        addGameVersion("1.20.3")
+//        addGameVersion("1.20.4")
+//        addGameVersion("1.20.6")
+//        mainArtifact(remapJar) {
+//            displayName = "SnowyLeavesPlus ${version} for Minecraft ${project.minecraft_version}"
+//        }
+//        relations { requiredDependency("fabric-api") }
+//    }
+//}
