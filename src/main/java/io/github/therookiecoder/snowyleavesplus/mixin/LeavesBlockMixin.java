@@ -57,7 +57,9 @@ public abstract class LeavesBlockMixin {
     // Always randomly tick appropriate blocks
     @Inject(method = "hasRandomTicks", at = @At("RETURN"), cancellable = true)
     private void hasRandomTicksInject(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue(shouldModify());
+        if (shouldModify()) {
+            cir.setReturnValue(true);
+        }
     }
 
     @Inject(method = "randomTick", at = @At("HEAD"))
