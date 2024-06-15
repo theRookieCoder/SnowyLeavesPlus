@@ -1,11 +1,7 @@
 plugins {
     id 'fabric-loom' version '1.6-SNAPSHOT'
-    id 'com.modrinth.minotaur' version '2.8.+'
-    id 'com.matthewprenger.cursegradle' version '1.4.+'
+    id "com.hypherionmc.modutils.modpublisher" version "2.1.+"
 }
-
-version = project.mod_version
-group = project.maven_group
 
 dependencies {
     // Change these versions in gradle.properties
@@ -16,11 +12,10 @@ dependencies {
 }
 
 processResources {
-    inputs.property "version", project.version
     filteringCharset "UTF-8"
 
     filesMatching("*.mod.json") {
-        expand "version": project.version
+        expand "version": project.mod_version
     }
 }
 
@@ -41,16 +36,24 @@ java {
     withSourcesJar()
 }
 
-import com.modrinth.minotaur.dependencies.ModDependency
-modrinth {
-    token = System.getenv("MODRINTH_TOKEN")
-    versionName = "SnowyLeavesPlus ${version} for Minecraft ${project.minecraft_version}"
-    versionNumber = "mc${project.minecraft_version}-${version}"
-    projectId = "of7wIinq"
-    uploadFile = remapJar
-    versionType = "beta"
-    loaders = ["fabric", "quilt"]
-    gameVersions = [
+publisher {
+    apiKeys {
+        modrinth System.getenv("MODRINTH_TOKEN")
+        curseforge System.getenv("CURSEFORGE_TOKEN")
+        github System.getenv("GITHUB_TOKEN")
+    }
+    setDebug(true)
+    changelog = "Fully update to `1.21`"
+
+    setCurseID("611998")
+    setModrinthID("of7wIinq")
+
+    setDisplayName("SnowyLeavesPlus ${project.mod_version} for Minecraft ${project.minecraft_version}")
+    setVersion("mc${project.minecraft_version}-${project.mod_version}")
+    setVersionType("beta")
+
+    setLoaders("fabric", "quilt")
+    setGameVersions(
         "1.19.4",
         "1.20",
         "1.20.1",
@@ -60,30 +63,15 @@ modrinth {
         "1.20.5",
         "1.20.6",
         "1.21"
-    ]
-    syncBodyFrom = rootProject.file("README.md").text
-    dependencies = [new ModDependency("fabric-api", "required")]
-}
+    )
 
-curseforge {
-    apiKey = System.getenv("CURSEFORGE_TOKEN")
-    project {
-        id = "611998"
-        releaseType = "beta"
-        addGameVersion("Fabric")
-        addGameVersion("Quilt")
-        addGameVersion("1.19.4")
-        addGameVersion("1.20")
-        addGameVersion("1.20.1")
-        addGameVersion("1.20.2")
-        addGameVersion("1.20.3")
-        addGameVersion("1.20.4")
-        addGameVersion("1.20.5")
-        addGameVersion("1.20.6")
-        addGameVersion("1.21")
-        mainArtifact(remapJar) {
-            displayName = "SnowyLeavesPlus ${version} for Minecraft ${project.minecraft_version}"
-        }
-        relations { requiredDependency("fabric-api") }
+    setArtifact(remapJar)
+    addAdditionalFile(remapSourcesJar)
+
+    modrinthDepends {
+        required 'fabric-api'
+    }
+    curseDepends {
+        required 'fabric-api'
     }
 }

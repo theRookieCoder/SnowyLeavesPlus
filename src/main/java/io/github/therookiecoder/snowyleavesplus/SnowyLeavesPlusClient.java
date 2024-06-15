@@ -8,10 +8,14 @@ import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
 import net.minecraft.world.biome.FoliageColors;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import static io.github.therookiecoder.snowyleavesplus.Snowiness.SNOWINESS;
 
 public class SnowyLeavesPlusClient implements ClientModInitializer {
+    public static final Logger LOGGER = LogManager.getLogger();
+
     @Override
     public void onInitializeClient() {
         ColorProviderRegistry.BLOCK.register(
@@ -23,6 +27,7 @@ public class SnowyLeavesPlusClient implements ClientModInitializer {
                         (double) state.get(SNOWINESS).ordinal() / Snowiness.values().length);
                 // If there is any error, return the default colour
                 } catch(Exception e) {
+                    LOGGER.warn("Could not get SNOWINESS block state");
                     return colour;
                 }
             },
