@@ -50,7 +50,7 @@ publisher {
     setModrinthID("of7wIinq")
 
     setDisplayName("SnowyLeavesPlus ${project.mod_version} for Minecraft ${project.minecraft_version}")
-    setVersion("mc${project.minecraft_version}-${project.mod_version}")
+    setVersion("${project.mod_version}-mc${project.minecraft_version}")
     setVersionType("beta")
 
     setLoaders("fabric", "quilt")
