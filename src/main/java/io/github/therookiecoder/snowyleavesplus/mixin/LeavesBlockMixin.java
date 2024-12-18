@@ -46,7 +46,7 @@ public abstract class LeavesBlockMixin {
         if (!shouldModify()) return;
         ((BlockInvoker) this)
             .invokeSetDefaultState(
-                ((Block)(Object) this)
+                ((Block) (Object) this)
                     .getDefaultState().with(
                         SNOWINESS,
                         Snowiness.none
@@ -72,20 +72,19 @@ public abstract class LeavesBlockMixin {
     ) {
         if (!shouldModify()) return;
 
-        Snowiness currentSnowiness = state.get(SNOWINESS);
         if (
             // If it's 'raining'
             world.isRaining()
                 // And the block is in a snowy biome
-                && world.getBiome(pos).value().getPrecipitation(pos) == Biome.Precipitation.SNOW
+                && world.getBiome(pos).value().getPrecipitation(pos, world.getSeaLevel()) == Biome.Precipitation.SNOW
                 // And the block is (somewhat) exposed to the sky
                 && world.getLightLevel(LightType.SKY, pos) > 10
         ) {
             // Make it more snowy
-            world.setBlockState(pos, state.with(SNOWINESS, currentSnowiness.increaseSnowiness()));
+            world.setBlockState(pos, state.with(SNOWINESS, state.get(SNOWINESS).increaseSnowiness()));
         } else {
             // Else make it less snowy
-            world.setBlockState(pos, state.with(SNOWINESS, currentSnowiness.decreaseSnowiness()));
+            world.setBlockState(pos, state.with(SNOWINESS, state.get(SNOWINESS).decreaseSnowiness()));
         }
     }
 }

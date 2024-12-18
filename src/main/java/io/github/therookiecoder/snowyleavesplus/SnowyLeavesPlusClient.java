@@ -25,8 +25,8 @@ public class SnowyLeavesPlusClient implements ClientModInitializer {
                 try {
                     return whiten(colour,
                         (double) state.get(SNOWINESS).ordinal() / Snowiness.values().length);
-                // If there is any error, return the default colour
-                } catch(Exception e) {
+                    // If there is any error, return the default colour
+                } catch (Exception e) {
                     LOGGER.warn("Could not get SNOWINESS block state");
                     return colour;
                 }
@@ -45,33 +45,40 @@ public class SnowyLeavesPlusClient implements ClientModInitializer {
 
     /**
      * Based on code from Minecraft's registered colour providers.
-     * @see net.minecraft.client.color.block.BlockColors
+     *
      * @param block The block to get the colour of
      * @param world The current world
-     * @param pos The position of the block
+     * @param pos   The position of the block
      * @return The leaf block's default colour.
+     * @see net.minecraft.client.color.block.BlockColors
      */
     private int getLeafBlockColour(Block block, BlockRenderView world, BlockPos pos) {
         if (block == Blocks.BIRCH_LEAVES) {
-            return FoliageColors.getBirchColor();
+            return FoliageColors.BIRCH;
         } else if (block == Blocks.SPRUCE_LEAVES) {
-            return FoliageColors.getSpruceColor();
+            return FoliageColors.SPRUCE;
         } else if (block == Blocks.MANGROVE_LEAVES) {
-            return FoliageColors.getMangroveColor();
+            return FoliageColors.MANGROVE;
+        } else if (world != null && pos != null) {
+            return BiomeColors.getFoliageColor(world, pos);
         } else {
-            return world != null && pos != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor();
+            return FoliageColors.DEFAULT;
         }
     }
 
     /**
      * Whiten a colour based on a whiteness value
-     * @param colour The colour to modify
+     *
+     * @param colour    The colour to modify
      * @param whiteness The amount to whiten the colour by.
      *                  A whiteness of <code>0</code> would return the same colour, and a
      *                  whiteness of <code>1</code> would return white (<code>0xffffff</code>)
      * @return The whitened colour
      */
     private int whiten(int colour, double whiteness) {
+        assert whiteness >= 0;
+        assert whiteness <= 1;
+
         // Extract colour channels
         int red = (colour >> 16 & 0xff);
         int green = (colour >> 8 & 0xff);
