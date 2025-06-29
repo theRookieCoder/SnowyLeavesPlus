@@ -27,7 +27,8 @@ public class SnowyLeavesPlusClient implements ClientModInitializer {
                         (double) state.get(SNOWINESS).ordinal() / Snowiness.values().length);
                     // If there is any error, return the default colour
                 } catch (Exception e) {
-                    LOGGER.warn("Could not get SNOWINESS block state");
+                    LOGGER.error("Could not get SNOWINESS block state");
+                    LOGGER.error(e);
                     return colour;
                 }
             },

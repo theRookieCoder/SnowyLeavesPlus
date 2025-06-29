@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.9-SNAPSHOT'
+    id 'fabric-loom' version "${loom_version}"
     // Check version: https://maven.firstdark.dev/#/releases/com/hypherionmc/modutils/modpublisher
     id "com.hypherionmc.modutils.modpublisher" version "2.1.+"
 }
@@ -20,7 +20,7 @@ processResources {
     }
 }
 
-def targetJavaVersion = 17
+def targetJavaVersion = 21
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
@@ -44,7 +44,7 @@ publisher {
         github System.getenv("GITHUB_TOKEN")
     }
     setDebug(true)
-    changelog = "Update to `1.21.4`"
+    changelog = "Update to `1.21.6`"
 
     setCurseID("611998")
     setModrinthID("of7wIinq")
@@ -54,7 +54,8 @@ publisher {
     setVersionType("beta")
 
     setLoaders("fabric", "quilt")
-    setGameVersions("1.21.4")
+    setGameVersions("1.21.6")
+    setGameVersions("1.21.5")
 
     setArtifact(remapJar)
     addAdditionalFile(remapSourcesJar)

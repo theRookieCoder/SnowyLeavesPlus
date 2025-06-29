@@ -29,7 +29,8 @@ interface BlockInvoker {
 public abstract class LeavesBlockMixin {
     @Unique
     boolean shouldModify() {
-        return this.getClass().equals(LeavesBlock.class)
+        return this.getClass().equals(TintedParticleLeavesBlock.class)
+            || this.getClass().equals(UntintedParticleLeavesBlock.class)
             || this.getClass().equals(MangroveLeavesBlock.class);
     }
 
@@ -42,7 +43,7 @@ public abstract class LeavesBlockMixin {
 
     // Set the default snowiness to none
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void initInject(AbstractBlock.Settings settings, CallbackInfo ci) {
+    private void initInject(float leafParticleChance, AbstractBlock.Settings settings, CallbackInfo ci) {
         if (!shouldModify()) return;
         ((BlockInvoker) this)
             .invokeSetDefaultState(
